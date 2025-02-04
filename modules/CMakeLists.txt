@@ -1,0 +1,1 @@
+add_subdirectory(cuda_multi_view_stereo)
