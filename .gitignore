@@ -1,0 +1,6 @@
+build/
+opencv_install/
+
+opencv/
+opencv_contrib/
+nv-codec-headers/

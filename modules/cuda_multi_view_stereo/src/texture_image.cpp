@@ -17,6 +17,7 @@ limitations under the License.
 #include "texture_image.h"
 
 #include <cuda_runtime.h>
+#include <iostream>
 
 #include "cuda_macro.h"
 

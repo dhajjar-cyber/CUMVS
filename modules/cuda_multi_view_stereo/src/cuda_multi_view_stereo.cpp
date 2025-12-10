@@ -17,6 +17,7 @@ limitations under the License.
 #include "cuda_multi_view_stereo.h"
 
 #include <set>
+#include <iostream>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/core/cuda.hpp>
@@ -522,6 +523,16 @@ public:
 		for (int i = 0; i < nviews; i++)
 		{
 			const int viewIndex = viewIndices.at<int>(i);
+
+			if (features[viewIndex].empty()) {
+				if (viewIndex == referenceIdx) return;
+				continue;
+			}
+			if (geom && depthMaps[viewIndex].empty()) {
+				if (viewIndex == referenceIdx) return;
+				continue;
+			}
+
 			Is.push_back(images[viewIndex]);
 			Ks.push_back(cameras[viewIndex]);
 			Rs.push_back(rotations[viewIndex]);
@@ -582,6 +593,7 @@ public:
 		/////////////////////////////////////////////////////////////////////////////////////////////////////
 		for (int iter = 0; iter < pmIters_; iter++)
 		{
+            std::cout << "    [PM] Iteration " << (iter + 1) << " / " << pmIters_ << std::endl;
 			propagation->propagateAndRefine(d_depths, d_normals, d_costs, PIXEL_COLOR_BLK);
 			DEBUG_CALLBACK(image, d_depths, d_normals, d_costs, cv::format("Black propagation at iter %d", iter + 1));
 
@@ -631,7 +643,7 @@ public:
 				scaledCameras[i] = scale < 1 ? scaleCameraParams(cameras[i], scale) : cameras[i];
 				featureTransform(scaledImages[i], featureImages[i]);
 
-				if (s != 0)
+				if (s != 0 && !depths[i].empty())
 				{
 					resize(depths[i], depths[i], scaledImages[i].size(), 0, 0, INTER_NEAREST);
 					resize(normals[i], normals[i], scaledImages[i].size(), 0, 0, INTER_NEAREST);

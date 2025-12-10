@@ -17,6 +17,9 @@ limitations under the License.
 #include <iostream>
 #include <fstream>
 #include <map>
+#include <numeric>
+#include <algorithm>
+#include <random>
 
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
@@ -38,6 +41,7 @@ static std::string keys =
 "{ max-image-size   |   3200 | maximum width or height of processed images.                                }"
 "{ gc-iterations    |      2 | number of outer PatchMatch iterations performed with geometric consistency. }"
 "{ multi-scale      |      1 | whether to use multi scale.                                                 }"
+"{ max-points       |      0 | maximum number of points in output ply (0: unlimited).                      }"
 "{ normal-level     |      0 | display only every level th normal (0:disable draw).                        }"
 "{ num-threads      |     -1 | number of threads for CPU processing (-1:auto detect).                      }"
 "{ debug d          |        | enable debug view.                                                          }"
@@ -101,6 +105,7 @@ int main(int argc, char* argv[])
 	const auto maxImageSize = parser.get<int>("max-image-size");
 	const auto gcIters = parser.get<int>("gc-iterations");
 	const auto multiScale = parser.get<int>("multi-scale") == 1;
+	const auto maxPoints = parser.get<int>("max-points");
 	const auto debugView = parser.has("debug");
 	const auto normalLevel = parser.get<int>("normal-level");
 	auto nthreads = parser.get<int>("num-threads");
@@ -158,6 +163,37 @@ int main(int argc, char* argv[])
 
 	std::cout << "number of initial points : " << sparsePoints.size() << std::endl;
 	std::cout << "number of dense points   : " << densePoints.size() << std::endl;
+
+	if (maxPoints > 0 && densePoints.total() > (size_t)maxPoints)
+	{
+		std::cout << "Subsampling point cloud to " << maxPoints << " points..." << std::endl;
+		
+		std::vector<int> indices(densePoints.total());
+		std::iota(indices.begin(), indices.end(), 0);
+		
+		std::random_device rd;
+		std::mt19937 g(rd());
+		std::shuffle(indices.begin(), indices.end(), g);
+		
+		Mat newPoints(maxPoints, 1, densePoints.type());
+		Mat newColors(maxPoints, 1, denseColors.type());
+		Mat newNormals;
+		if (!denseNormals.empty())
+			newNormals.create(maxPoints, 1, denseNormals.type());
+			
+		for(int i=0; i<maxPoints; ++i) {
+			densePoints.row(indices[i]).copyTo(newPoints.row(i));
+			denseColors.row(indices[i]).copyTo(newColors.row(i));
+			if (!denseNormals.empty())
+				denseNormals.row(indices[i]).copyTo(newNormals.row(i));
+		}
+		
+		densePoints = newPoints;
+		denseColors = newColors;
+		denseNormals = newNormals;
+		
+		std::cout << "number of subsampled points: " << densePoints.size() << std::endl;
+	}
 
 	// save dense point cloud
 	makeDirectory(outputDir);
