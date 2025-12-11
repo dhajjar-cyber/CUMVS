@@ -166,6 +166,14 @@ int main(int argc, char* argv[])
 
 	if (maxPoints > 0 && densePoints.total() > (size_t)maxPoints)
 	{
+		// Ensure N x 1 format for row-based access
+		if (densePoints.rows == 1 && densePoints.cols > 1) {
+			densePoints = densePoints.reshape(3, densePoints.cols);
+			denseColors = denseColors.reshape(3, denseColors.cols);
+			if (!denseNormals.empty())
+				denseNormals = denseNormals.reshape(3, denseNormals.cols);
+		}
+
 		std::cout << "Subsampling point cloud to " << maxPoints << " points..." << std::endl;
 		
 		std::vector<int> indices(densePoints.total());
@@ -181,11 +189,21 @@ int main(int argc, char* argv[])
 		if (!denseNormals.empty())
 			newNormals.create(maxPoints, 1, denseNormals.type());
 			
-		for(int i=0; i<maxPoints; ++i) {
-			densePoints.row(indices[i]).copyTo(newPoints.row(i));
-			denseColors.row(indices[i]).copyTo(newColors.row(i));
-			if (!denseNormals.empty())
-				denseNormals.row(indices[i]).copyTo(newNormals.row(i));
+		try {
+			for(int i=0; i<maxPoints; ++i) {
+				densePoints.row(indices[i]).copyTo(newPoints.row(i));
+				denseColors.row(indices[i]).copyTo(newColors.row(i));
+				if (!denseNormals.empty())
+					denseNormals.row(indices[i]).copyTo(newNormals.row(i));
+			}
+		} catch (const cv::Exception& e) {
+			std::cerr << "Error during subsampling: " << e.what() << std::endl;
+			std::cerr << "densePoints: " << densePoints.size() << " rows=" << densePoints.rows << " cols=" << densePoints.cols << " type=" << densePoints.type() << std::endl;
+			std::cerr << "denseColors: " << denseColors.size() << " rows=" << denseColors.rows << " cols=" << denseColors.cols << " type=" << denseColors.type() << std::endl;
+			std::cerr << "denseNormals: " << denseNormals.size() << " rows=" << denseNormals.rows << " cols=" << denseNormals.cols << " type=" << denseNormals.type() << std::endl;
+			std::cerr << "maxPoints: " << maxPoints << std::endl;
+			std::cerr << "indices size: " << indices.size() << std::endl;
+			throw;
 		}
 		
 		densePoints = newPoints;
