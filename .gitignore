@@ -3,3 +3,4 @@ opencv_install/
 *.so
 *.so.*
 *.a
+install/
