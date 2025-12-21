@@ -45,6 +45,16 @@ set_target_properties(opencv_flann PROPERTIES
 list(APPEND _cmake_import_check_targets opencv_flann )
 list(APPEND _cmake_import_check_files_for_opencv_flann "${_IMPORT_PREFIX}/lib/libopencv_flann.so.4.10.0" )
 
+# Import target "opencv_hdf" for configuration "RELEASE"
+set_property(TARGET opencv_hdf APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(opencv_hdf PROPERTIES
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libopencv_hdf.so.4.10.0"
+  IMPORTED_SONAME_RELEASE "libopencv_hdf.so.410"
+  )
+
+list(APPEND _cmake_import_check_targets opencv_hdf )
+list(APPEND _cmake_import_check_files_for_opencv_hdf "${_IMPORT_PREFIX}/lib/libopencv_hdf.so.4.10.0" )
+
 # Import target "opencv_imgproc" for configuration "RELEASE"
 set_property(TARGET opencv_imgproc APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(opencv_imgproc PROPERTIES
@@ -385,16 +395,6 @@ set_target_properties(opencv_rapid PROPERTIES
 list(APPEND _cmake_import_check_targets opencv_rapid )
 list(APPEND _cmake_import_check_files_for_opencv_rapid "${_IMPORT_PREFIX}/lib/libopencv_rapid.so.4.10.0" )
 
-# Import target "opencv_rgbd" for configuration "RELEASE"
-set_property(TARGET opencv_rgbd APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(opencv_rgbd PROPERTIES
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libopencv_rgbd.so.4.10.0"
-  IMPORTED_SONAME_RELEASE "libopencv_rgbd.so.410"
-  )
-
-list(APPEND _cmake_import_check_targets opencv_rgbd )
-list(APPEND _cmake_import_check_files_for_opencv_rgbd "${_IMPORT_PREFIX}/lib/libopencv_rgbd.so.4.10.0" )
-
 # Import target "opencv_shape" for configuration "RELEASE"
 set_property(TARGET opencv_shape APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(opencv_shape PROPERTIES
@@ -434,16 +434,6 @@ set_target_properties(opencv_wechat_qrcode PROPERTIES
 
 list(APPEND _cmake_import_check_targets opencv_wechat_qrcode )
 list(APPEND _cmake_import_check_files_for_opencv_wechat_qrcode "${_IMPORT_PREFIX}/lib/libopencv_wechat_qrcode.so.4.10.0" )
-
-# Import target "opencv_xfeatures2d" for configuration "RELEASE"
-set_property(TARGET opencv_xfeatures2d APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-set_target_properties(opencv_xfeatures2d PROPERTIES
-  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libopencv_xfeatures2d.so.4.10.0"
-  IMPORTED_SONAME_RELEASE "libopencv_xfeatures2d.so.410"
-  )
-
-list(APPEND _cmake_import_check_targets opencv_xfeatures2d )
-list(APPEND _cmake_import_check_files_for_opencv_xfeatures2d "${_IMPORT_PREFIX}/lib/libopencv_xfeatures2d.so.4.10.0" )
 
 # Import target "opencv_ximgproc" for configuration "RELEASE"
 set_property(TARGET opencv_ximgproc APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)

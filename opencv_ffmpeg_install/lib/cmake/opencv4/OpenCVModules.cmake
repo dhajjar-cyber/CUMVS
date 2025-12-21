@@ -7,7 +7,7 @@ if(CMAKE_VERSION VERSION_LESS "2.8.12")
    message(FATAL_ERROR "CMake >= 2.8.12 required")
 endif()
 cmake_policy(PUSH)
-cmake_policy(VERSION 2.8.12...4.0)
+cmake_policy(VERSION 2.8.12...3.29)
 #----------------------------------------------------------------
 # Generated CMake target import file.
 #----------------------------------------------------------------
@@ -19,7 +19,7 @@ set(CMAKE_IMPORT_FILE_VERSION 1)
 set(_cmake_targets_defined "")
 set(_cmake_targets_not_defined "")
 set(_cmake_expected_targets "")
-foreach(_cmake_expected_target IN ITEMS opencv_cudev opencv_core opencv_cudaarithm opencv_flann opencv_imgproc opencv_intensity_transform opencv_ml opencv_phase_unwrapping opencv_plot opencv_quality opencv_reg opencv_signal opencv_surface_matching opencv_alphamat opencv_cudafilters opencv_cudaimgproc opencv_cudawarping opencv_dnn opencv_dnn_superres opencv_features2d opencv_fuzzy opencv_hfs opencv_img_hash opencv_imgcodecs opencv_line_descriptor opencv_photo opencv_saliency opencv_text opencv_videoio opencv_xphoto opencv_calib3d opencv_cudafeatures2d opencv_cudastereo opencv_datasets opencv_highgui opencv_mcc opencv_objdetect opencv_rapid opencv_rgbd opencv_shape opencv_structured_light opencv_video opencv_wechat_qrcode opencv_xfeatures2d opencv_ximgproc opencv_xobjdetect opencv_aruco opencv_bgsegm opencv_bioinspired opencv_ccalib opencv_cudabgsegm opencv_cudalegacy opencv_cudaobjdetect opencv_dnn_objdetect opencv_dpm opencv_face opencv_gapi opencv_optflow opencv_stitching opencv_tracking opencv_cudaoptflow opencv_stereo opencv_superres opencv_videostab)
+foreach(_cmake_expected_target IN ITEMS opencv_cudev opencv_core opencv_cudaarithm opencv_flann opencv_hdf opencv_imgproc opencv_intensity_transform opencv_ml opencv_phase_unwrapping opencv_plot opencv_quality opencv_reg opencv_signal opencv_surface_matching opencv_alphamat opencv_cudafilters opencv_cudaimgproc opencv_cudawarping opencv_dnn opencv_dnn_superres opencv_features2d opencv_fuzzy opencv_hfs opencv_img_hash opencv_imgcodecs opencv_line_descriptor opencv_photo opencv_saliency opencv_text opencv_videoio opencv_xphoto opencv_calib3d opencv_cudafeatures2d opencv_cudastereo opencv_datasets opencv_highgui opencv_mcc opencv_objdetect opencv_rapid opencv_shape opencv_structured_light opencv_video opencv_wechat_qrcode opencv_ximgproc opencv_xobjdetect opencv_aruco opencv_bgsegm opencv_bioinspired opencv_ccalib opencv_cudabgsegm opencv_cudalegacy opencv_cudaobjdetect opencv_dnn_objdetect opencv_dpm opencv_face opencv_gapi opencv_optflow opencv_stitching opencv_tracking opencv_cudaoptflow opencv_stereo opencv_superres opencv_videostab)
   list(APPEND _cmake_expected_targets "${_cmake_expected_target}")
   if(TARGET "${_cmake_expected_target}")
     list(APPEND _cmake_targets_defined "${_cmake_expected_target}")
@@ -76,6 +76,13 @@ set_target_properties(opencv_cudaarithm PROPERTIES
 add_library(opencv_flann SHARED IMPORTED)
 
 set_target_properties(opencv_flann PROPERTIES
+  INTERFACE_LINK_LIBRARIES "opencv_cudev;opencv_core;opencv_cudev;opencv_core"
+)
+
+# Create imported target opencv_hdf
+add_library(opencv_hdf SHARED IMPORTED)
+
+set_target_properties(opencv_hdf PROPERTIES
   INTERFACE_LINK_LIBRARIES "opencv_cudev;opencv_core;opencv_cudev;opencv_core"
 )
 
@@ -317,13 +324,6 @@ set_target_properties(opencv_rapid PROPERTIES
   INTERFACE_LINK_LIBRARIES "opencv_cudev;opencv_core;opencv_flann;opencv_imgproc;opencv_features2d;opencv_calib3d;opencv_cudev;opencv_core;opencv_flann;opencv_imgproc;opencv_features2d;opencv_calib3d"
 )
 
-# Create imported target opencv_rgbd
-add_library(opencv_rgbd SHARED IMPORTED)
-
-set_target_properties(opencv_rgbd PROPERTIES
-  INTERFACE_LINK_LIBRARIES "opencv_cudev;opencv_core;opencv_flann;opencv_imgproc;opencv_features2d;opencv_calib3d;opencv_cudev;opencv_core;opencv_flann;opencv_imgproc;opencv_features2d;opencv_calib3d"
-)
-
 # Create imported target opencv_shape
 add_library(opencv_shape SHARED IMPORTED)
 
@@ -350,13 +350,6 @@ add_library(opencv_wechat_qrcode SHARED IMPORTED)
 
 set_target_properties(opencv_wechat_qrcode PROPERTIES
   INTERFACE_LINK_LIBRARIES "opencv_cudev;opencv_core;opencv_flann;opencv_imgproc;opencv_dnn;opencv_features2d;opencv_calib3d;opencv_objdetect;opencv_cudev;opencv_core;opencv_flann;opencv_imgproc;opencv_dnn;opencv_features2d;opencv_calib3d;opencv_objdetect"
-)
-
-# Create imported target opencv_xfeatures2d
-add_library(opencv_xfeatures2d SHARED IMPORTED)
-
-set_target_properties(opencv_xfeatures2d PROPERTIES
-  INTERFACE_LINK_LIBRARIES "opencv_cudev;opencv_core;opencv_cudaarithm;opencv_flann;opencv_imgproc;opencv_ml;opencv_features2d;opencv_calib3d;opencv_shape;opencv_cudev;opencv_core;opencv_cudaarithm;opencv_flann;opencv_imgproc;opencv_ml;opencv_features2d;opencv_calib3d;opencv_shape"
 )
 
 # Create imported target opencv_ximgproc
@@ -461,7 +454,7 @@ set_target_properties(opencv_optflow PROPERTIES
 add_library(opencv_stitching SHARED IMPORTED)
 
 set_target_properties(opencv_stitching PROPERTIES
-  INTERFACE_LINK_LIBRARIES "opencv_cudev;opencv_core;opencv_cudaarithm;opencv_flann;opencv_imgproc;opencv_ml;opencv_cudafilters;opencv_cudaimgproc;opencv_cudawarping;opencv_dnn;opencv_features2d;opencv_calib3d;opencv_cudafeatures2d;opencv_objdetect;opencv_shape;opencv_video;opencv_xfeatures2d;opencv_cudalegacy;opencv_cudev;opencv_core;opencv_cudaarithm;opencv_flann;opencv_imgproc;opencv_ml;opencv_cudafilters;opencv_cudaimgproc;opencv_cudawarping;opencv_dnn;opencv_features2d;opencv_calib3d;opencv_cudafeatures2d;opencv_objdetect;opencv_shape;opencv_video;opencv_xfeatures2d;opencv_cudalegacy"
+  INTERFACE_LINK_LIBRARIES "opencv_cudev;opencv_core;opencv_cudaarithm;opencv_flann;opencv_imgproc;opencv_cudafilters;opencv_cudaimgproc;opencv_cudawarping;opencv_dnn;opencv_features2d;opencv_calib3d;opencv_cudafeatures2d;opencv_objdetect;opencv_video;opencv_cudalegacy;opencv_cudev;opencv_core;opencv_cudaarithm;opencv_flann;opencv_imgproc;opencv_cudafilters;opencv_cudaimgproc;opencv_cudawarping;opencv_dnn;opencv_features2d;opencv_calib3d;opencv_cudafeatures2d;opencv_objdetect;opencv_video;opencv_cudalegacy"
 )
 
 # Create imported target opencv_tracking
