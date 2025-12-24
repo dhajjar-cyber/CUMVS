@@ -11,10 +11,10 @@
 /* #undef CV_DISABLE_OPTIMIZATION */
 
 /* Compile for 'real' NVIDIA GPU architectures */
-#define CUDA_ARCH_BIN " 80 89 90"
+#define CUDA_ARCH_BIN " 80 89 90 120"
 
 /* NVIDIA GPU features are used */
-#define CUDA_ARCH_FEATURES " 80 89 90"
+#define CUDA_ARCH_FEATURES " 80 89 90 120"
 
 /* Compile for 'virtual' NVIDIA PTX architectures */
 #define CUDA_ARCH_PTX ""

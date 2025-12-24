@@ -94,7 +94,7 @@ endif()
 
 
 # Version Compute Capability from which OpenCV has been compiled is remembered
-set(OpenCV_COMPUTE_CAPABILITIES "-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_89,code=sm_89;-gencode;arch=compute_90,code=sm_90;-D_FORCE_INLINES")
+set(OpenCV_COMPUTE_CAPABILITIES "-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_89,code=sm_89;-gencode;arch=compute_90,code=sm_90;-gencode;arch=compute_120,code=sm_120;-D_FORCE_INLINES")
 
 set(OpenCV_CUDA_VERSION "12.8")
 set(OpenCV_USE_CUBLAS   "1")
