@@ -82,7 +82,7 @@
 /* #undef HAVE_GDCM */
 
 /* NVIDIA Video Decoding API*/
-#define HAVE_NVCUVID
+/* #undef HAVE_NVCUVID */
 #define HAVE_NVCUVID_HEADER
 /* #undef HAVE_DYNLINK_NVCUVID_HEADER */
 

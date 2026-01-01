@@ -99,7 +99,7 @@ set(OpenCV_COMPUTE_CAPABILITIES "-gencode;arch=compute_80,code=sm_80;-gencode;ar
 set(OpenCV_CUDA_VERSION "12.8")
 set(OpenCV_USE_CUBLAS   "1")
 set(OpenCV_USE_CUFFT    "1")
-set(OpenCV_USE_NVCUVID  "1")
+set(OpenCV_USE_NVCUVID  "")
 set(OpenCV_USE_NVCUVENC "")
 set(OpenCV_CUDNN_VERSION    "")
 set(OpenCV_USE_CUDNN        "")
